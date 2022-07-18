@@ -39,9 +39,9 @@ public class ClickTrigger : MonoBehaviour
 	private void OnMouseDown()
 	{
 		if(canClick){
-			_ai.PlayerSelects(_myCoordX, _myCoordY);
+
+			_ai.SwitchTurns(_myCoordX, _myCoordY);
 			canClick = false;
 		}
-
 	}
 }

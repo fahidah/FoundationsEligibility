@@ -16,6 +16,7 @@ public class TicTacToeAI : MonoBehaviour
 
 	int _aiLevel;
 
+	[SerializeField]
 	TicTacToeState[,] boardState;
 
 	[SerializeField]
@@ -61,6 +62,7 @@ public class TicTacToeAI : MonoBehaviour
 	private void StartGame()
 	{
 		_triggers = new ClickTrigger[3,3];
+		_isPlayerTurn = true;
 		onGameStarted.Invoke();
 	}
 
@@ -82,4 +84,18 @@ public class TicTacToeAI : MonoBehaviour
 			Quaternion.identity
 		);
 	}
+
+	public void SwitchTurns(int coordX, int coordY)
+    {
+        if (_isPlayerTurn)
+        {
+			PlayerSelects(coordX, coordY);
+			_isPlayerTurn = false;
+        }
+        else
+        {
+			AiSelects(coordX, coordY);
+			_isPlayerTurn = true;
+		}
+    }
 }
