@@ -40,6 +40,8 @@ public class ClickTrigger : MonoBehaviour
 	{
 		if(canClick){
 			_ai.PlayerSelects(_myCoordX, _myCoordY);
+			canClick = false;
 		}
+
 	}
 }
