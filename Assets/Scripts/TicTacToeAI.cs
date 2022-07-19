@@ -16,6 +16,9 @@ public class TicTacToeAI : MonoBehaviour
 
 	int _aiLevel;
 
+	public GameObject playerTurnNotice;
+	public GameObject aiTurnNotice;
+
 	[SerializeField]
 	TicTacToeState[,] boardState;
 
@@ -51,6 +54,7 @@ public class TicTacToeAI : MonoBehaviour
 
 	public void StartAI(int AILevel){
 		_aiLevel = AILevel;
+		playerTurnNotice.SetActive(true);
 		StartGame();
 	}
 
@@ -89,11 +93,18 @@ public class TicTacToeAI : MonoBehaviour
     {
         if (_isPlayerTurn)
         {
+
+			aiTurnNotice.SetActive(true);
+			playerTurnNotice.SetActive(false);
+
 			PlayerSelects(coordX, coordY);
 			_isPlayerTurn = false;
         }
         else
         {
+			aiTurnNotice.SetActive(false);
+			playerTurnNotice.SetActive(true);
+			
 			AiSelects(coordX, coordY);
 			_isPlayerTurn = true;
 		}
