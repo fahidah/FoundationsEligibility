@@ -15,11 +15,12 @@ public class TicTacToeAI : MonoBehaviour
 {
 
 	int _aiLevel;
+	public int availableBoardCells;
 
 	public GameObject playerTurnNotice;
 	public GameObject aiTurnNotice;
 
-	[SerializeField]
+	
 	TicTacToeState[,] boardState;
 
 	[SerializeField]
@@ -66,6 +67,8 @@ public class TicTacToeAI : MonoBehaviour
 	private void StartGame()
 	{
 		_triggers = new ClickTrigger[3,3];
+		boardState = new TicTacToeState[_gridSize, _gridSize];
+
 		_isPlayerTurn = true;
 		onGameStarted.Invoke();
 	}
@@ -99,7 +102,10 @@ public class TicTacToeAI : MonoBehaviour
 
 			PlayerSelects(coordX, coordY);
 			_isPlayerTurn = false;
-        }
+
+			UpdateBoardStateCross(coordX, coordY);
+
+		}
         else
         {
 			aiTurnNotice.SetActive(false);
@@ -107,6 +113,48 @@ public class TicTacToeAI : MonoBehaviour
 			
 			AiSelects(coordX, coordY);
 			_isPlayerTurn = true;
+
+			UpdateBoardStateCircle(coordX, coordY);
+		}
+	}
+
+	public void UpdateBoardStateCross(int coordX, int coordY)
+	{
+
+		boardState[coordX, coordY] = TicTacToeState.cross;
+
+		//AIPlays();
+		DisplayBoardState();
+
+	}
+	public void UpdateBoardStateCircle(int coordX, int coordY)
+	{
+
+		boardState[coordX, coordY] = TicTacToeState.circle;
+		DisplayBoardState();
+		//AIPlays();
+
+	}
+
+	public void DisplayBoardState()
+    {
+		for(int row = 0; row < _gridSize; row++)
+        {
+			for (int column = 0; column < _gridSize; column++)
+            {
+				Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
+				AIPlays(row,column);
+			}
 		}
     }
+
+
+	public void AIPlays(int coordX, int coordY)
+	{
+		if ((int)boardState[coordX,coordY] == 0)
+		{
+			availableBoardCells = (int)boardState[coordX,coordY];
+
+		}
+	}
 }

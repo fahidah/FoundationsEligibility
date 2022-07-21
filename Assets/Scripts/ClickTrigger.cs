@@ -6,6 +6,7 @@ public class ClickTrigger : MonoBehaviour
 {
 	TicTacToeAI _ai;
 
+
 	[SerializeField]
 	private int _myCoordX = 0;
 	[SerializeField]
