@@ -24,7 +24,7 @@ public class TicTacToeAI : MonoBehaviour
 
 	
 	TicTacToeState[,] boardState;
-    List<(TicTacToeState, TicTacToeState)> availableBoardCells;
+    List<TicTacToeState> availableBoardCells;
 
 	[SerializeField]
 	private bool _isPlayerTurn;
@@ -148,13 +148,21 @@ public class TicTacToeAI : MonoBehaviour
         {
 			for (int column = 0; column < _gridSize; column++)
             {
-				if((boardState[row, column])== 0)
-				{
+				if(((int)boardState[row, column])== 0)
+				{ 
 					count++;
+
+					if(count == pickedCell)
+                    {
+						Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
+					}
+					
 				}
 			}
 		}
 
+
+		
 		pickedCell = Random.Range(0, count);
 
 		Debug.Log("Length of available cell: " + count);
