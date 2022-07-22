@@ -113,11 +113,13 @@ public class TicTacToeAI : MonoBehaviour
 			UpdateBoardStateCross(coordX, coordY);
 
 		}
+
         else
         {
 			aiTurnNotice.SetActive(false);
 			playerTurnNotice.SetActive(true);
-			
+
+			//AutoAIPlays();
 			AiSelects(coordX, coordY);
 			_isPlayerTurn = true;
 
@@ -125,24 +127,19 @@ public class TicTacToeAI : MonoBehaviour
 		}
 	}
 
+
 	public void UpdateBoardStateCross(int coordX, int coordY)
 	{
-
 		boardState[coordX, coordY] = TicTacToeState.cross;
-
-		DisplayBoardState();
-
 	}
+
+
 	public void UpdateBoardStateCircle(int coordX, int coordY)
 	{
-
 		boardState[coordX, coordY] = TicTacToeState.circle;
-		DisplayBoardState();
-
-
 	}
 
-	public void DisplayBoardState()
+	public void  AutoAIPlays()
     {
 		for(int row = 0; row < _gridSize; row++)
         {
@@ -155,11 +152,12 @@ public class TicTacToeAI : MonoBehaviour
 					if(count == pickedCell)
                     {
 						Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
+						//Instantiate(_oPrefab, new Vector3(row, column, 0), Quaternion.identity);
 					}
-					
 				}
 			}
 		}
+
 
 
 		
