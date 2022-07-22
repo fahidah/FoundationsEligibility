@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public enum TicTacToeState{none, cross, circle}
 
@@ -15,13 +13,18 @@ public class TicTacToeAI : MonoBehaviour
 {
 
 	int _aiLevel;
-	public int availableBoardCells;
+
+	int count = 0;
+	
+
+	int pickedCell;
 
 	public GameObject playerTurnNotice;
 	public GameObject aiTurnNotice;
 
 	
 	TicTacToeState[,] boardState;
+    TicTacToeState[,] availableBoardCells;
 
 	[SerializeField]
 	private bool _isPlayerTurn;
@@ -68,6 +71,10 @@ public class TicTacToeAI : MonoBehaviour
 	{
 		_triggers = new ClickTrigger[3,3];
 		boardState = new TicTacToeState[_gridSize, _gridSize];
+
+		//best to use list for dynamic size,,,,still figuring it out..memory leak might occur cos of this
+		availableBoardCells = new TicTacToeState[_gridSize, _gridSize];
+
 
 		_isPlayerTurn = true;
 		onGameStarted.Invoke();
@@ -123,7 +130,6 @@ public class TicTacToeAI : MonoBehaviour
 
 		boardState[coordX, coordY] = TicTacToeState.cross;
 
-		//AIPlays();
 		DisplayBoardState();
 
 	}
@@ -132,7 +138,7 @@ public class TicTacToeAI : MonoBehaviour
 
 		boardState[coordX, coordY] = TicTacToeState.circle;
 		DisplayBoardState();
-		//AIPlays();
+
 
 	}
 
@@ -142,19 +148,21 @@ public class TicTacToeAI : MonoBehaviour
         {
 			for (int column = 0; column < _gridSize; column++)
             {
-				Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
-				AIPlays(row,column);
+				//Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
+
+				if((boardState[row, column])== 0)
+				{
+					count++;
+					pickedCell = Random.Range(1, count);
+				}
 			}
 		}
-    }
 
+		
+		Debug.Log("Length of available cell: " + count);
+		Debug.Log("Picked Cell: " + pickedCell);
 
-	public void AIPlays(int coordX, int coordY)
-	{
-		if ((int)boardState[coordX,coordY] == 0)
-		{
-			availableBoardCells = (int)boardState[coordX,coordY];
+		count = 0;
 
-		}
 	}
 }
