@@ -15,7 +15,7 @@ public class TicTacToeAI : MonoBehaviour
 	int _aiLevel;
 
 	int count = 0;
-	
+	int zeroCounter = 0;
 
 	int pickedCell;
 
@@ -24,7 +24,7 @@ public class TicTacToeAI : MonoBehaviour
 
 	
 	TicTacToeState[,] boardState;
-    TicTacToeState[,] availableBoardCells;
+    List<(TicTacToeState, TicTacToeState)> availableBoardCells;
 
 	[SerializeField]
 	private bool _isPlayerTurn;
@@ -73,7 +73,7 @@ public class TicTacToeAI : MonoBehaviour
 		boardState = new TicTacToeState[_gridSize, _gridSize];
 
 		//best to use list for dynamic size,,,,still figuring it out..memory leak might occur cos of this
-		availableBoardCells = new TicTacToeState[_gridSize, _gridSize];
+		//availableBoardCells = new TicTacToeState[_gridSize, _gridSize];
 
 
 		_isPlayerTurn = true;
@@ -148,21 +148,19 @@ public class TicTacToeAI : MonoBehaviour
         {
 			for (int column = 0; column < _gridSize; column++)
             {
-				//Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
-
 				if((boardState[row, column])== 0)
 				{
 					count++;
-					pickedCell = Random.Range(1, count);
 				}
 			}
 		}
 
-		
+		pickedCell = Random.Range(0, count);
+
 		Debug.Log("Length of available cell: " + count);
 		Debug.Log("Picked Cell: " + pickedCell);
 
 		count = 0;
-
 	}
 }
+
