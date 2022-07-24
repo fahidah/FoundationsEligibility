@@ -119,8 +119,7 @@ public class TicTacToeAI : MonoBehaviour
 			aiTurnNotice.SetActive(false);
 			playerTurnNotice.SetActive(true);
 
-			//AutoAIPlays();
-			AiSelects(coordX, coordY);
+			AutoAIPlays();
 			_isPlayerTurn = true;
 
 			UpdateBoardStateCircle(coordX, coordY);
@@ -153,6 +152,7 @@ public class TicTacToeAI : MonoBehaviour
                     {
 						Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
 						//Instantiate(_oPrefab, new Vector3(row, column, 0), Quaternion.identity);
+						AiSelects(row, column);
 					}
 				}
 			}
