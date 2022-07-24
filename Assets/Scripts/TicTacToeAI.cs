@@ -110,6 +110,19 @@ public class TicTacToeAI : MonoBehaviour
 		);
 	}
 
+	public void AITurns(int coordX, int coordY)
+    {
+
+			aiTurnNotice.SetActive(false);
+			playerTurnNotice.SetActive(true);
+
+			//AIChoice();
+			_isPlayerTurn = true;
+
+			UpdateBoardStateCircle(coordX, coordY);
+
+	}
+
 
 	public void UpdateBoardStateCross(int coordX, int coordY)
 	{
@@ -139,7 +152,16 @@ public class TicTacToeAI : MonoBehaviour
 
                         if (!_isPlayerTurn)
                         {
+							aiTurnNotice.SetActive(false);
+							playerTurnNotice.SetActive(true);
+
+							_isPlayerTurn = true;
+
+							UpdateBoardStateCircle(row, column);
+
+
 							AiSelects(row, column);
+							clickTrigger.canClick = false;
 						}
 					}
 				}
