@@ -49,6 +49,7 @@ public class TicTacToeAI : MonoBehaviour
 	public WinnerEvent onPlayerWin;
 
 	ClickTrigger[,] _triggers;
+	ClickTrigger clickTrigger;
 	
 	private void Awake()
 	{
@@ -84,6 +85,12 @@ public class TicTacToeAI : MonoBehaviour
 	public void PlayerSelects(int coordX, int coordY)
 	{
 
+		aiTurnNotice.SetActive(true);
+		playerTurnNotice.SetActive(false);
+
+		AIChoice();
+		_isPlayerTurn = false;
+
 		UpdateBoardStateCross(coordX, coordY);
 
 		SetVisual(coordX, coordY, playerState);
@@ -103,33 +110,6 @@ public class TicTacToeAI : MonoBehaviour
 		);
 	}
 
-	public void SwitchTurns(int coordX, int coordY)
-    {
-        if (_isPlayerTurn)
-        {
-
-			aiTurnNotice.SetActive(true);
-			playerTurnNotice.SetActive(false);
-
-			PlayerSelects(coordX, coordY);
-			_isPlayerTurn = false;
-
-			UpdateBoardStateCross(coordX, coordY);
-
-		}
-		
-        else
-        {
-			aiTurnNotice.SetActive(false);
-			playerTurnNotice.SetActive(true);
-
-			StartCoroutine(AIChoice());
-			_isPlayerTurn = true;
-
-			UpdateBoardStateCircle(coordX, coordY);
-		}
-	}
-
 
 	public void UpdateBoardStateCross(int coordX, int coordY)
 	{
@@ -142,10 +122,8 @@ public class TicTacToeAI : MonoBehaviour
 		boardState[coordX, coordY] = TicTacToeState.circle;
 	}
 
-	private IEnumerator  AIChoice()
+	private void AIChoice()
     {
-
-		yield return new WaitForSeconds(1);
 
 		for(int row = 0; row < _gridSize; row++)
         {
@@ -158,8 +136,11 @@ public class TicTacToeAI : MonoBehaviour
 					if(count == pickedCell)
                     {
 						Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
-						Instantiate(_oPrefab, _triggers[row,column].transform.position, Quaternion.identity);
-						AiSelects(row, column);
+
+                        if (!_isPlayerTurn)
+                        {
+							AiSelects(row, column);
+						}
 					}
 				}
 			}

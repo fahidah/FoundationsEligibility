@@ -13,7 +13,7 @@ public class ClickTrigger : MonoBehaviour
 	private int _myCoordY = 0;
 
 	[SerializeField]
-	private bool canClick;
+	public bool canClick;
 
 	private void Awake()
 	{
@@ -41,8 +41,15 @@ public class ClickTrigger : MonoBehaviour
 	{
 		if(canClick){
 
-			_ai.SwitchTurns(_myCoordX, _myCoordY);
+			_ai.PlayerSelects(_myCoordX, _myCoordY);
 			canClick = false;
+            
 		}
+		
 	}
+
+	public void ToggleCanClick()
+    {
+		canClick = false;
+    }
 }
