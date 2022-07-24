@@ -74,9 +74,6 @@ public class TicTacToeAI : MonoBehaviour
 		_triggers = new ClickTrigger[3,3];
 		boardState = new TicTacToeState[_gridSize, _gridSize];
 
-		//best to use list for dynamic size,,,,still figuring it out..memory leak might occur cos of this
-		//availableBoardCells = new TicTacToeState[_gridSize, _gridSize];
-
 
 		_isPlayerTurn = true;
 		onGameStarted.Invoke();
@@ -88,12 +85,12 @@ public class TicTacToeAI : MonoBehaviour
 		aiTurnNotice.SetActive(true);
 		playerTurnNotice.SetActive(false);
 
-		AIChoice();
-		_isPlayerTurn = false;
 
 		UpdateBoardStateCross(coordX, coordY);
-
 		SetVisual(coordX, coordY, playerState);
+
+		_isPlayerTurn = false;
+		AIChoice();		
 	}
 
 	public void AiSelects(int coordX, int coordY){
@@ -110,19 +107,6 @@ public class TicTacToeAI : MonoBehaviour
 		);
 	}
 
-	public void AITurns(int coordX, int coordY)
-    {
-
-			aiTurnNotice.SetActive(false);
-			playerTurnNotice.SetActive(true);
-
-			//AIChoice();
-			_isPlayerTurn = true;
-
-			UpdateBoardStateCircle(coordX, coordY);
-
-	}
-
 
 	public void UpdateBoardStateCross(int coordX, int coordY)
 	{
@@ -135,7 +119,7 @@ public class TicTacToeAI : MonoBehaviour
 		boardState[coordX, coordY] = TicTacToeState.circle;
 	}
 
-	private void AIChoice()
+	public void AIChoice()
     {
 
 		for(int row = 0; row < _gridSize; row++)
@@ -155,21 +139,17 @@ public class TicTacToeAI : MonoBehaviour
 							aiTurnNotice.SetActive(false);
 							playerTurnNotice.SetActive(true);
 
-							_isPlayerTurn = true;
-
 							UpdateBoardStateCircle(row, column);
-
 
 							AiSelects(row, column);
 							clickTrigger.canClick = false;
+
+							_isPlayerTurn = true;
 						}
 					}
 				}
 			}
 		}
-
-
-
 		
 		pickedCell = Random.Range(0, count);
 

@@ -43,13 +43,7 @@ public class ClickTrigger : MonoBehaviour
 
 			_ai.PlayerSelects(_myCoordX, _myCoordY);
 			canClick = false;
-            
+			_ai.AIChoice();
 		}
-		
 	}
-
-	public void ToggleCanClick()
-    {
-		canClick = false;
-    }
 }
