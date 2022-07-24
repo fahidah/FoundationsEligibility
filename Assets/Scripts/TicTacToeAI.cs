@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using System.Collections;
 
 public enum TicTacToeState{none, cross, circle}
 
@@ -80,7 +81,10 @@ public class TicTacToeAI : MonoBehaviour
 		onGameStarted.Invoke();
 	}
 
-	public void PlayerSelects(int coordX, int coordY){
+	public void PlayerSelects(int coordX, int coordY)
+	{
+
+		UpdateBoardStateCross(coordX, coordY);
 
 		SetVisual(coordX, coordY, playerState);
 	}
@@ -113,13 +117,13 @@ public class TicTacToeAI : MonoBehaviour
 			UpdateBoardStateCross(coordX, coordY);
 
 		}
-
+		
         else
         {
 			aiTurnNotice.SetActive(false);
 			playerTurnNotice.SetActive(true);
 
-			AutoAIPlays();
+			StartCoroutine(AIChoice());
 			_isPlayerTurn = true;
 
 			UpdateBoardStateCircle(coordX, coordY);
@@ -138,8 +142,11 @@ public class TicTacToeAI : MonoBehaviour
 		boardState[coordX, coordY] = TicTacToeState.circle;
 	}
 
-	public void  AutoAIPlays()
+	private IEnumerator  AIChoice()
     {
+
+		yield return new WaitForSeconds(1);
+
 		for(int row = 0; row < _gridSize; row++)
         {
 			for (int column = 0; column < _gridSize; column++)
@@ -151,7 +158,7 @@ public class TicTacToeAI : MonoBehaviour
 					if(count == pickedCell)
                     {
 						Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
-						//Instantiate(_oPrefab, new Vector3(row, column, 0), Quaternion.identity);
+						Instantiate(_oPrefab, _triggers[row,column].transform.position, Quaternion.identity);
 						AiSelects(row, column);
 					}
 				}
