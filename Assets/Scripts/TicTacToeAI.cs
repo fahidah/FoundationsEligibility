@@ -17,7 +17,6 @@ public class TicTacToeAI : MonoBehaviour
 	int _aiLevel;
 
 	int count = 0;
-	int zeroCounter = 0;
 
 	int pickedCell;
 
@@ -134,7 +133,7 @@ public class TicTacToeAI : MonoBehaviour
 
 					if(count == pickedCell)
                     {
-						Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
+						//Debug.Log("(" + row + "," + column + "): " + (int)boardState[row, column]);
 
                         if (!_isPlayerTurn)
                         {
@@ -146,7 +145,13 @@ public class TicTacToeAI : MonoBehaviour
 							AiSelects(row, column);
 
 							_isPlayerTurn = true;
+
 						}
+
+					}
+					if (count < 5)
+					{
+						WiningCondition();
 					}
 				}
 			}
@@ -154,8 +159,8 @@ public class TicTacToeAI : MonoBehaviour
 		
 		pickedCell = Random.Range(0, count);
 
-		Debug.Log("Length of available cell: " + count);
-		Debug.Log("Picked Cell: " + pickedCell);
+		//Debug.Log("Length of available cell: " + count);
+		//Debug.Log("Picked Cell: " + pickedCell);
 
 		count = 0;
 	}
@@ -163,10 +168,34 @@ public class TicTacToeAI : MonoBehaviour
 
 	private void WiningCondition()
     {
-		foreach(var item in boardState)
-        {
-			Debug.Log(item);
-        }
-    }
+			int s1 = (int)boardState[0,0] + (int)boardState[0, 1] + (int)boardState[0, 2];
+			int s2 = (int)boardState[1,0] + (int)boardState[1,1] + (int)boardState[1, 2];
+			int s3 = (int)boardState[2,0] + (int)boardState[2, 1] + (int)boardState[2, 2];
+			int s4 = (int)boardState[0, 0] + (int)boardState[1,0] + (int)boardState[0, 2];
+			int s5 = (int)boardState[0, 1] + (int)boardState[1, 1] + (int)boardState[2, 1];
+			int s6 = (int)boardState[0, 2] + (int)boardState[1, 2] + (int)boardState[2, 2];
+			int s7 = (int)boardState[0, 0] + (int)boardState[1, 1] + (int)boardState[2, 2];
+			int s8 = (int)boardState[0, 2] + (int)boardState[1, 1] + (int)boardState[0, 2];
+
+			var solutions = new int[] { s1, s2, s3, s4, s5, s6, s7, s8 };
+
+			for(int i = 0; i<solutions.Length; i++)
+			{
+				if(solutions[i] == (int)TicTacToeState.cross)
+				{
+					Debug.Log("Player Won!");
+				}
+
+				else if (solutions[i] == (int)TicTacToeState.cross)
+				{
+				Debug.Log("AI Won!");
+				}
+
+				else
+				{
+					Debug.Log("Draw!");
+				}
+			}
+	}
 }
 
