@@ -53,7 +53,7 @@ public class ClickTrigger : MonoBehaviour
     {
         if (selected)
         {
-			_ai.AIChoice();
+			StartCoroutine(_ai.AIChoice());
 			selected = false;
 		}
 		

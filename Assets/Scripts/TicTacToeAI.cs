@@ -8,6 +8,7 @@ public enum TicTacToeState{none, cross, circle}
 [System.Serializable]
 public class WinnerEvent : UnityEvent<int>
 {
+	
 }
 
 public class TicTacToeAI : MonoBehaviour
@@ -90,7 +91,7 @@ public class TicTacToeAI : MonoBehaviour
 		SetVisual(coordX, coordY, playerState);
 
 		_isPlayerTurn = false;
-		AIChoice();		
+		StartCoroutine(AIChoice());		
 	}
 
 	public void AiSelects(int coordX, int coordY){
@@ -119,8 +120,9 @@ public class TicTacToeAI : MonoBehaviour
 		boardState[coordX, coordY] = TicTacToeState.circle;
 	}
 
-	public void AIChoice()
+	public IEnumerator AIChoice()
     {
+		yield return new WaitForSeconds(.5f);
 
 		for(int row = 0; row < _gridSize; row++)
         {
@@ -157,5 +159,14 @@ public class TicTacToeAI : MonoBehaviour
 
 		count = 0;
 	}
+
+
+	private void WiningCondition()
+    {
+		foreach(var item in boardState)
+        {
+			Debug.Log(item);
+        }
+    }
 }
 
