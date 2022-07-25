@@ -142,7 +142,6 @@ public class TicTacToeAI : MonoBehaviour
 							UpdateBoardStateCircle(row, column);
 
 							AiSelects(row, column);
-							clickTrigger.canClick = false;
 
 							_isPlayerTurn = true;
 						}
